@@ -25,9 +25,20 @@ echo
 echo *************************************************************************
 echo * Clearing failed Windows Update folders
 echo *************************************************************************
+
+echo SKIPPING THIS STEP AS IT TAKES TOO LONG. UNCOMMENT TO PROCEED.
+rem Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
  
-Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
- 
+echo
+echo *************************************************************************
+echo * Clearing Client ID from Registry
+echo *************************************************************************
+
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate" /v AccountDomainSid /f
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate" /v PingID /f
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate" /v SusClientId /f
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate" /v SusClientIDValidation /f
+
 echo
 echo *************************************************************************
 echo * Renaming C:\Windows\SoftwareDistribution (with current date and time)
@@ -67,5 +78,5 @@ net start msiserver
  
 echo
 echo *************************************************************************
-echo * DONE
+echo * Done. Wait a moment for the computer to report.
 echo *************************************************************************
